@@ -1,7 +1,9 @@
 select * 
 from PortfolioProject..CovidDeaths
-where continent is NULL
-order by 1,2
+where continent is not NULL
+-- and icu_patients is not null
+-- and hosp_patients is not null 
+order by 3,4
 
 -- COUNTRY --
 -- Total Cases vs Total deaths 
@@ -123,19 +125,20 @@ from #percentPopulationVaccinated
 order by 2,3
 
 -- Creating views for visualizations
-use PortfolioProject
-go 
-create view total_population_vaccinated_percent as 
-select d.continent, d.location, d.date, d.population, v.new_vaccinations,
-sum(v.new_vaccinations) 
-    over (
-        partition by d.location
-        order by d.location, d.date
-    )
-as rolling_total_vaccinations
-from PortfolioProject..CovidDeaths d
-join PortfolioProject..CovidVaccinations v
-    on d.location = v.location 
-    and d.date = v.date
-where d.continent is not null 
+-- use PortfolioProject
+-- go 
+-- create view total_population_vaccinated_percent as 
+-- select d.continent, d.location, d.date, d.population, v.new_vaccinations,
+-- sum(v.new_vaccinations) 
+--     over (
+--         partition by d.location
+--         order by d.location, d.date
+--     )
+-- as rolling_total_vaccinations
+-- from PortfolioProject..CovidDeaths d
+-- join PortfolioProject..CovidVaccinations v
+--     on d.location = v.location 
+--     and d.date = v.date
+-- where d.continent is not null 
+
 
